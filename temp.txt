@@ -1,0 +1,23 @@
+app.post('/users',(req,res)=>{
+  const {username}=req.body
+
+  chatkit.createUser({
+    name: username,
+    id: username
+  })
+  .then(()=>res.sendStatus(201))
+  .catch((error)=>{
+    if(error.error_type === 'services/chatkit/user_already_exists'){
+      res.sendStatus(200)
+    }else{
+      //res.status(statusCode >= 100 && statusCode < 600 ? err.code : 500).json(error);
+      //res.sendStatus(500)
+      res.status(error.statusCode).json(error);
+    }
+  })
+});
+
+app.post('/authenticate',(req,res)=>{
+  const { grant_type } = req.body;
+  res.json(chatkit.authenticate({grant_type,userId: req.query.user_id}));
+});
