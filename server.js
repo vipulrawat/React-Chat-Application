@@ -13,7 +13,9 @@ const app = express()
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(cors())
-//User creation
+//Create Room
+
+//
 app.post('/users',(req,res)=>{
   const {username} = req.body;
 
@@ -21,7 +23,9 @@ app.post('/users',(req,res)=>{
     name:username,
     id:username
   })
-  .then(()=>res.sendStatus(201))
+  .then(()=>{
+      res.sendStatus(201)
+    })
   .catch((err)=>res.sendStatus(200));
 })
  

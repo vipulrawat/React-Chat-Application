@@ -1,23 +1,41 @@
-app.post('/users',(req,res)=>{
-  const {username}=req.body
+chatManager.connect()
+            .then(currentUser => {
+                this.setState({ currentUser: currentUser })
+                return currentUser.subscribeToRoom({
+                    roomId: this.state.roomId,
+                    messageLimit: 100,
+                    hooks: {
+                        onNewMessage: message => {
+                            this.setState({ messages: [...this.state.messages, message] })
+                        },
+                        onUserStartedTyping: user => {
+                            this.setState({ usersWhoAreTyping: [...this.state.usersWhoAreTyping, user.name] })
+                        },
+                        onUserStoppedTyping: user => {
+                            this.setState({
+                                usersWhoAreTyping: this.state.usersWhoAreTyping.filter(
+                                    username => username !== user.name
+                                ),
+                            })
+                        },
+                        onUserCameOnline: () => this.forceUpdate(),
+                        onUserWentOffline: () => this.forceUpdate(),
+                        onUserJoined: () => this.forceUpdate()
+                    }
+                })
 
-  chatkit.createUser({
-    name: username,
-    id: username
-  })
-  .then(()=>res.sendStatus(201))
-  .catch((error)=>{
-    if(error.error_type === 'services/chatkit/user_already_exists'){
-      res.sendStatus(200)
-    }else{
-      //res.status(statusCode >= 100 && statusCode < 600 ? err.code : 500).json(error);
-      //res.sendStatus(500)
-      res.status(error.statusCode).json(error);
+            })
+            .then(currentRoom => { this.setState({ currentRoom: currentRoom }) })
+            .catch(error => console.error(error));
     }
-  })
-});
+    sendMessage(text) {
+        this.state.currentUser.sendMessage({
+            roomId: this.state.currentRoom.id,
+            text
+        })
+    }
+    sendTypingEvent() {
+        this.state.currentUser.isTypingIn({ roomId: this.state.currentRoom.id })
 
-app.post('/authenticate',(req,res)=>{
-  const { grant_type } = req.body;
-  res.json(chatkit.authenticate({grant_type,userId: req.query.user_id}));
-});
+            .catch(error => console.error('TYPING ERROR', error))
+    }

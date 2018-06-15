@@ -5,7 +5,7 @@ class WhosOnlineList extends React.Component{
         if(this.props.users){
             return(<ul>
                     {this.props.users.map((user,index)=>{
-                        return <li>{user.name} ({user.presence.state})</li>
+                        return <li key={index}>{user.name} ({user.presence.state})</li>
                     })}
                 </ul>)
         }else{
