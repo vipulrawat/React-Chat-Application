@@ -15,7 +15,7 @@ class RoomSelectScreen extends React.Component {
         const chatManager = new Chatkit.ChatManager({
             instanceLocator: 'v1:us1:9eff55ed-3202-430b-a600-58489044c886',
             userId: this.props.username,
-            tokenProvider: new Chatkit.TokenProvider({ url: 'http://localhost:3001/auth' })
+            tokenProvider: new Chatkit.TokenProvider({ url: '/auth' })
         })
         chatManager.connect()
             .then(currentUser=>{
