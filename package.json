@@ -2,7 +2,6 @@
   "name": "chat-application-chatkit",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
   "dependencies": {
     "@pusher/chatkit": "^0.7.12",
     "@pusher/chatkit-server": "^0.12.1",
