@@ -8,9 +8,9 @@ class MessageList extends React.Component{
                 <ul>
                     {this.props.messages.map((message,index)=>(
                         <li key={index}>
-                            <div>
-                                <span>{message.senderId}</span>
-                                <p>{message.text}</p>
+                            <div className="messageContainer">
+                                <span id="sender">{message.senderId}</span>
+                                <p id="messagetext">{message.text}</p>
                             </div>
                         </li>
                     ))}

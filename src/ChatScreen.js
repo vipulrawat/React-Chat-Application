@@ -4,13 +4,13 @@ import MessageList from './components/MessageList'
 import SendMessageForm from './components/SendMessageForm'
 import TypingIndicator from './components/TypingIndicator'
 import WhosOnlineList from './components/WhosOnlineList'
+import './styles/main.css'
 
 class ChatScreen extends React.Component {
     constructor(props) {
         super(props)
         console.log(this.props)
         this.state = {
-            /////////////////
             messages: [],
             currentRoom: {},
             currentUser: {},
@@ -18,9 +18,6 @@ class ChatScreen extends React.Component {
         }
         this.sendMessage = this.sendMessage.bind(this);
         this.sendTypingEvent = this.sendTypingEvent.bind(this);
-        console.log('Get this:',this.props.currentUsername)
-        console.log('Get this:',this.props.roomId)
-
     }
     componentDidMount() {
         const chatManager = new Chatkit.ChatManager({
@@ -72,14 +69,20 @@ class ChatScreen extends React.Component {
     }
     render() {
         return (
-            <div>
-                <h2>Chat Screen</h2>
-                <span>HI,{this.props.currentUsername}</span>
-                <WhosOnlineList users={this.state.currentRoom.users} />
-                <hr />
-                <MessageList messages={this.state.messages} />
-                <TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} />
-                <SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} />
+            <div className="container">
+              <div className="leftPane">
+                <div id="welcomeText">
+                  <h2>Chat Screen</h2>
+                  <span>HI,{this.props.currentUsername}</span>
+                </div>
+                <WhosOnlineList users={this.state.currentRoom.users} currentUser={this.state.currentUser} />
+              </div>
+              <div className="rightPane">
+                <div id="messages"><MessageList messages={this.state.messages} /></div>
+                <div id="indicator"><TypingIndicator usersWhoAreTyping={this.state.usersWhoAreTyping} /></div>
+                <div id="sendmessage"><SendMessageForm onSubmit={this.sendMessage} onChange={this.sendTypingEvent} /></div>                                
+              </div>
+              <div className="clearfix"></div>
             </div>
         );
     }

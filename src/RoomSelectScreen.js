@@ -28,25 +28,22 @@ class RoomSelectScreen extends React.Component {
                     console.log(`Error getting joinable rooms: ${err}`)
                 })
             })
-            .catch(err=>console.log('eerrrrr'))
+            .catch(err=>console.log('Error while connecting to the chatkit'))
     }
     roomSelected(e){
         let r = e.target.value;
-        this.setState({roomId:r,currentScreen:'ChatScreen'},()=>{
-              console.log('Room Id state:',this.state.roomId)
-        });
-      
+        this.setState({roomId:r,currentScreen:'ChatScreen'});
     }
     render() {
         if(this.state.currentScreen === 'SelectRoom'){
-            return (<div>
-                <h3>Select Room to Enter</h3>
-                <ul>
-                    {this.state.roomList.map((room,index)=>{
-                        return <div key={index}><button onDoubleClick={this.roomSelected.bind(this)} value={room.id} >{room.name}</button></div>
-                    })}
-                </ul>
-            </div>);
+          return (<div className="mainPage">
+                      <h3>Join the Rooms available</h3>
+                      <ul>
+                          {this.state.roomList.map((room,index)=>{
+                              return <div key={index}><button onClick={this.roomSelected.bind(this)} value={room.id} className="roomBtn" ><span>{room.name}</span></button></div>
+                          })}
+                      </ul>
+                  </div>);
         }else if(this.state.currentScreen === 'ChatScreen' && this.state.roomId !== 0){
             return(<ChatScreen roomId={this.state.roomId} currentUsername={this.props.username}/>)
         }

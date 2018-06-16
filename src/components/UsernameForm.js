@@ -1,10 +1,10 @@
 import React from 'react';
-
+import '..//styles/main.css'
 class UsernameForm extends React.Component{
     constructor(props){
         super(props);
         this.state={
-            username:''
+          username:''
         }
         this.onChange = this.onChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
@@ -12,20 +12,22 @@ class UsernameForm extends React.Component{
     onSubmit(e){
         e.preventDefault();
         console.log(this.props.onSubmit(this.state.username));
-        
+
     }
     onChange(e){
         this.setState({username:e.target.value});
     }
     render(){
         return(
-            <div>
+            <div className="mainPage">
+              <div className="usernameForm">
                 <form onSubmit={this.onSubmit}>
-                    <input type="text" 
-                        placeholder="Username" 
-                        onChange={this.onChange}/>
-                    <input type="submit"/>
+                    <input type="text"
+                        placeholder="Choose your username"
+                        onChange={this.onChange} className="textInput"/>
+                      <input type="submit" value="Enter" className="submitInput" />
                 </form>
+                </div>
              </div>
         )
     }
