@@ -15,7 +15,7 @@ class App extends Component {
 
   }
   onUsernameSubmitted(username){
-    fetch('http://localhost:3001/users',{
+    fetch('https://chatwidall.herokuapp.com:3001/users',{
       method:'POST',
       headers:{
         'Content-Type':'application/json'
